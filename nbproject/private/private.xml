@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/Users/victoraubin/NetBeansProjects/MessageWall_exercise/web/view/wallview.jsp</file>
+            <file>file:/Users/victoraubin/NetBeansProjects/MessageWall_exercise/src/java/demo/spec/RemoteLogin.java</file>
+            <file>file:/Users/victoraubin/NetBeansProjects/MessageWall_exercise/src/java/demo/impl/UserAccess_Impl.java</file>
+            <file>file:/Users/victoraubin/NetBeansProjects/MessageWall_exercise/src/java/demo/spec/Message.java</file>
+            <file>file:/Users/victoraubin/NetBeansProjects/MessageWall_exercise/web/error-bad-action.html</file>
+            <file>file:/Users/victoraubin/NetBeansProjects/MessageWall_exercise/src/java/demo/spec/MessageWall.java</file>
+            <file>file:/Users/victoraubin/NetBeansProjects/MessageWall_exercise/src/java/demo/web/ContextListener.java</file>
+            <file>file:/Users/victoraubin/NetBeansProjects/MessageWall_exercise/src/java/demo/web/ControllerServlet.java</file>
+            <file>file:/Users/victoraubin/NetBeansProjects/MessageWall_exercise/src/java/demo/web/WallViewServlet.java</file>
+            <file>file:/Users/victoraubin/NetBeansProjects/MessageWall_exercise/web/WEB-INF/web.xml</file>
+            <file>file:/Users/victoraubin/NetBeansProjects/MessageWall_exercise/src/java/demo/impl/MessageWall_and_RemoteLogin_Impl.java</file>
+            <file>file:/Users/victoraubin/NetBeansProjects/MessageWall_exercise/src/java/demo/impl/Message_Impl.java</file>
+            <file>file:/Users/victoraubin/NetBeansProjects/MessageWall_exercise/web/error-not-loggedin.html</file>
+        </group>
+    </open-files>
+</project-private>
