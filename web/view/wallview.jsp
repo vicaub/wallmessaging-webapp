@@ -12,16 +12,16 @@
 
 <%
     UserAccess userAccess = (UserAccess) session.getAttribute("useraccess");
-    // MessageWall messageWall = (MessageWall) request.getAttribute("messageWall");
     List<Message> messages = userAccess.getAllMessages();
     int number = userAccess.getNumber();
 %>
 
 <script>
-    
-    
-    
-    
+    function pollingFunction() {
+        var x = document.getElementById('refresh').submit();
+        console.log("refreshing...")
+    }
+    var t = setInterval(pollingFunction,5000);
 </script>
 
 <body>
@@ -90,7 +90,8 @@
 
 <HR WIDTH="100%" SIZE="2">
 
-<form action="refresh.do" method=POST>
-    <input type=submit value="Refresh wall view message"></form>
+<form action="refresh.do" method=POST id="refresh">
+    <input type=submit value="Refresh wall view message">
+</form>
 
 </body>
