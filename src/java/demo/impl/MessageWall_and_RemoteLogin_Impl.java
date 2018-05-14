@@ -5,20 +5,30 @@ import demo.spec.MessageWall;
 import demo.spec.RemoteLogin;
 import demo.spec.UserAccess;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MessageWall_and_RemoteLogin_Impl implements RemoteLogin, MessageWall {
 
     private List<Message> messages;
+    private HashMap<String, String> loginPairs;
 
     public MessageWall_and_RemoteLogin_Impl() {
         messages = new ArrayList<Message>();
         messages.add(new Message_Impl("admin", "Bienvenido!"));
+        loginPairs = new HashMap<String, String>();
+        loginPairs.put("victor", "aubin");
+        loginPairs.put("admin", "admin");
+        loginPairs.put("juan", "luis");
     }
 
     @Override
-    public UserAccess connect(String usr, String passwd) {
-        return new UserAccess_Impl(this, usr);
+    public UserAccess connect(String usr, String passwd) throws Exception {
+        if (loginPairs.containsKey(usr) && loginPairs.get(usr).equals(passwd)) {
+            return new UserAccess_Impl(this, usr);
+        } else {
+            throw new Exception("bad credentials");
+        }
     }
 
     @Override

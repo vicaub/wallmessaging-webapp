@@ -40,7 +40,7 @@ public class ControllerServlet extends HttpServlet {
             try {
                 UserAccess userAccess = getRemoteLogin().connect(user, password);
                 session.setAttribute("useraccess", userAccess);
-                
+
                 // return "/wallview";
                 return "/view/wallview.jsp";
             } catch (Exception e) {

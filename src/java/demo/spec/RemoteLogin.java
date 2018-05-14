@@ -1,5 +1,5 @@
 package demo.spec;
 
 public interface RemoteLogin {
-    UserAccess connect(String usr, String passwd);
+    UserAccess connect(String usr, String passwd) throws Exception;
 }
