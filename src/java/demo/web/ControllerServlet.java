@@ -1,12 +1,9 @@
 package demo.web;
 
-import demo.impl.MessageWall_and_RemoteLogin_Impl;
-import demo.spec.MessageWall;
 import demo.spec.RemoteLogin;
 import demo.spec.UserAccess;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,93 +14,84 @@ public class ControllerServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
-        System.out.println("demo.web.ControllerServlet.doGet()");
         process(request, response);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
-        System.out.println("demo.web.ControllerServlet.doPost()");
         process(request, response);
     }
    
     protected void process(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
-        System.out.println("demo.web.ControllerServlet.process()");
         String view = perform_action(request);
         forwardRequest(request, response, view);
     }
 
     protected String perform_action(HttpServletRequest request)
         throws IOException, ServletException {
-        System.out.println("demo.web.ControllerServlet.perform_action()");
         
         String serv_path = request.getServletPath();
         HttpSession session = request.getSession();
         
-        ServletContext context = getServletContext();
-
         if (serv_path.equals("/login.do")) {
             String user = request.getParameter("user");
             String password = request.getParameter("password");
             try {
                 UserAccess userAccess = getRemoteLogin().connect(user, password);
-                request.setAttribute("messageWall", getMessageWall());
-                request.setAttribute("user", user);
+                session.setAttribute("useraccess", userAccess);
+                
+                // return "/wallview";
                 return "/view/wallview.jsp";
             } catch (Exception e) {
                 e.printStackTrace();
                 return "/error-no-user_access.html";
             }
             
-        } 
+        }
         
-        else if (serv_path.equals("/put.do")) {
+        else if ((UserAccess) session.getAttribute("useraccess") == null) {
+            return "/error-not-loggedin.html";
+        } else {
+            if (serv_path.equals("/put.do")) {
             String newMessage = request.getParameter("msg");
-            String user = request.getParameter("user");
-            getMessageWall().put(user, newMessage);
-            request.setAttribute("user", user);
-            request.setAttribute("messageWall", getMessageWall());
+            UserAccess userAccess = (UserAccess) session.getAttribute("useraccess");
+            userAccess.put(newMessage);
+
+            // return "/wallview";
             return "/view/wallview.jsp";
-        } 
-        
-        else if (serv_path.equals("/refresh.do")) {
-            String user = request.getParameter("user");
-            request.setAttribute("user", user);
-            request.setAttribute("messageWall", getMessageWall());
-            return "/view/wallview.jsp";
-        } 
-        
-        else if (serv_path.equals("/logout.do")) {
-            return "/goodbye.html";
-        } 
-        
-        else if (serv_path.equals("/delete.do")) {
-            int index = (Integer) Integer.parseInt(request.getParameter("index"));
-            String user = (String) request.getParameter("user");
-            getMessageWall().delete(user, index);
-            request.setAttribute("messageWall", getMessageWall());
-            request.setAttribute("user", user);
-            return "/view/wallview.jsp";
+            } 
+
+            else if (serv_path.equals("/refresh.do")) {
+                // return "/wallview";
+                return "/view/wallview.jsp";
+            } 
+
+            else if (serv_path.equals("/logout.do")) {
+                return "/goodbye.html";
+            } 
+
+            else if (serv_path.equals("/delete.do")) {
+                int index = (Integer) Integer.parseInt(request.getParameter("index"));
+                UserAccess userAccess = (UserAccess) session.getAttribute("useraccess");
+                userAccess.delete(index);
+
+                return "/view/wallview.jsp";
+            }
+
+            else {
+                return "/error-bad-action.html";
+            }
         }
         
-        else {
-            return "/error-bad-action.html";
-        }
     }
 
     public RemoteLogin getRemoteLogin() {
-        System.out.println("demo.web.ControllerServlet.getRemoteLogin()");
         return (RemoteLogin) getServletContext().getAttribute("remoteLogin");
     }
     
-    public MessageWall getMessageWall() {
-        System.out.println("demo.web.ControllerServlet.getMessageWall()");
-        return (MessageWall) getServletContext().getAttribute("messageWall");
-    }
     public void forwardRequest(HttpServletRequest request, HttpServletResponse response, String view) 
             throws ServletException, IOException {
-        System.out.println("demo.web.ControllerServlet.forwardRequest()");
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(view);
         if (dispatcher == null) {
             throw new ServletException("No dispatcher for view path '"+view+"'");

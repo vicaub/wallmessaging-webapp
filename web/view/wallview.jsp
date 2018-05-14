@@ -1,5 +1,3 @@
-<%@page import="demo.spec.MessageWall"%>
-<%@page import="java.util.ArrayList"%>
 <%@page import="demo.spec.Message"%>
 <%@ page import="demo.spec.UserAccess"%>
 <%@ page import="java.util.List" %>
@@ -13,10 +11,10 @@
 </head>
 
 <%
-    String user = request.getParameter("user");
-    MessageWall messageWall = (MessageWall) request.getAttribute("messageWall");
-    ArrayList<Message> messages = (ArrayList<Message>) messageWall.getAllMessages();
-    int number = messageWall.getNumber();
+    UserAccess userAccess = (UserAccess) session.getAttribute("useraccess");
+    // MessageWall messageWall = (MessageWall) request.getAttribute("messageWall");
+    List<Message> messages = userAccess.getAllMessages();
+    int number = userAccess.getNumber();
 %>
 
 <script>
@@ -28,7 +26,7 @@
 
 <body>
 
-    <h3>user: <em><%=user%></em>
+    <h3>user: <em><%=userAccess.getUser()%></em>
         <a href=logout.do>[Close session]</a></h3>
 
     <h2> <%=number%> Messages shown:</h2>
@@ -68,9 +66,6 @@
                 <input type="hidden"
                        name="index"
                        value="<%=index%>">
-                <input type="hidden"
-                       name="user"
-                       value="<%=user%>">
                 <input type="submit"
                        name="delete"
                        value="delete">
@@ -90,14 +85,12 @@
 
 <form action="put.do" method=POST>
     New message:<input type=text name=msg size=10>
-    <input type=text name=user value="<%=user%>" hidden="true">
     <input type=submit value="Send message">
 </form>
 
 <HR WIDTH="100%" SIZE="2">
 
 <form action="refresh.do" method=POST>
-    <input type="hidden" name="user" value="<%=user%>">
     <input type=submit value="Refresh wall view message"></form>
 
 </body>
