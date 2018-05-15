@@ -24,11 +24,11 @@ public class MessageWall_and_RemoteLogin_Impl implements RemoteLogin, MessageWal
 
     @Override
     public UserAccess connect(String usr, String passwd) throws Exception {
-        //if (loginPairs.containsKey(usr) && loginPairs.get(usr).equals(passwd)) {
+        if (loginPairs.containsKey(usr) && loginPairs.get(usr).equals(passwd)) {
             return new UserAccess_Impl(this, usr);
-        //} else {
-        //    throw new Exception("bad credentials");
-        //}
+        } else {
+            throw new Exception("bad credentials");
+        }
     }
 
     @Override
