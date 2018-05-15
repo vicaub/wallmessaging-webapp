@@ -21,7 +21,7 @@
         var x = document.getElementById('refresh').submit();
         console.log("refreshing...")
     }
-    var t = setInterval(pollingFunction,5000);
+    var t = setInterval(pollingFunction,10000);
 </script>
 
 <body>

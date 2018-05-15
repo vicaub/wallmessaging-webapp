@@ -41,8 +41,8 @@ public class ControllerServlet extends HttpServlet {
                 UserAccess userAccess = getRemoteLogin().connect(user, password);
                 session.setAttribute("useraccess", userAccess);
 
-                // return "/wallview";
-                return "/view/wallview.jsp";
+                return "/wallview";
+                // return "/view/wallview.jsp";
             } catch (Exception e) {
                 e.printStackTrace();
                 return "/error-no-user_access.html";
@@ -54,20 +54,21 @@ public class ControllerServlet extends HttpServlet {
             return "/error-not-loggedin.html";
         } else {
             if (serv_path.equals("/put.do")) {
-            String newMessage = request.getParameter("msg");
-            UserAccess userAccess = (UserAccess) session.getAttribute("useraccess");
-            userAccess.put(newMessage);
+                String newMessage = request.getParameter("msg");
+                UserAccess userAccess = (UserAccess) session.getAttribute("useraccess");
+                userAccess.put(newMessage);
 
-            // return "/wallview";
-            return "/view/wallview.jsp";
-            } 
+                return "/wallview";
+                // return "/view/wallview.jsp";
+                } 
 
             else if (serv_path.equals("/refresh.do")) {
-                // return "/wallview";
-                return "/view/wallview.jsp";
+                return "/wallview";
+                // return "/view/wallview.jsp";
             } 
 
             else if (serv_path.equals("/logout.do")) {
+                session.setAttribute("useraccess", null);
                 return "/goodbye.html";
             } 
 
@@ -76,7 +77,8 @@ public class ControllerServlet extends HttpServlet {
                 UserAccess userAccess = (UserAccess) session.getAttribute("useraccess");
                 userAccess.delete(index);
 
-                return "/view/wallview.jsp";
+                // return "/view/wallview.jsp";
+                return "/error-bad-action.html";
             }
 
             else {
